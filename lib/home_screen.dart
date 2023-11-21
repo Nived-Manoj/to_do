@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  var box = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +32,30 @@ class HomeScreen extends StatelessWidget {
           showModalBottomSheet(
               context: context,
               builder: (context) => Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              hintText: "enter a task"),
+                        ),
+                      ),
                       TextField(
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            hintText: "enter a task"),
-                      )
+                            hintText: "enter detaiils of the task"),
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            hintText: "enter date"),
+                      ),
+                      ElevatedButton(onPressed: () {}, child: Text("save"))
                     ],
                   ));
         },
