@@ -20,14 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(
-            child: Expanded(
-              child: ListView.builder(
-                itemCount: keylist.length,
-                itemBuilder: (context, index) => Container(
-                  color: Colors.grey,
-                  child: Text(box.get(keylist[index])),
-                ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: keylist.length,
+              itemBuilder: (context, index) => Container(
+                color: Colors.grey,
+                child: Text(box.get(keylist[index])),
               ),
             ),
           ),
