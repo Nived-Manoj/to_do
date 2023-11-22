@@ -10,6 +10,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var box = Hive.box('myBox');
+  final titlecontroller = TextEditingController();
+  final descontroller = TextEditingController();
+  var keylist = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +21,16 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Center(
-            child: Container(
-              height: 40,
-              width: 320,
-              color: Colors.grey,
-              child: Text("Hello"),
+            child: Expanded(
+              child: ListView.builder(
+                itemCount: keylist.length,
+                itemBuilder: (context, index) => Container(
+                  color: Colors.grey,
+                  child: Text(box.get(keylist[index])),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -37,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
+                          controller: titlecontroller,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
@@ -44,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       TextField(
+                        controller: descontroller,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
@@ -55,7 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10)),
                             hintText: "enter date"),
                       ),
-                      ElevatedButton(onPressed: () {}, child: Text("save"))
+                      ElevatedButton(
+                          onPressed: () {
+                            box.add(titlecontroller.text);
+                            keylist = box.keys.toList();
+                            setState(() {});
+                          },
+                          child: Text("save"))
                     ],
                   ));
         },
