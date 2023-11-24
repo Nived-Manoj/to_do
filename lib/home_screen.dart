@@ -11,21 +11,34 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var box = Hive.box('myBox');
   final titlecontroller = TextEditingController();
-  final descontroller = TextEditingController();
+  bool? isChecked = false;
+
   var keylist = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.black),
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.black,
+        title: Text(
+          "TO DO",
+          style: TextStyle(),
+        ),
+      ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: ListView.builder(
               itemCount: keylist.length,
-              itemBuilder: (context, index) => Container(
-                color: Colors.grey,
-                child: Text(box.get(keylist[index])),
+              itemBuilder: (context, index) => ListTile(
+                trailing: Checkbox(
+                    value: isChecked,
+                    onChanged: (value) {
+                      isChecked = value;
+                      setState(() {});
+                    }),
+                onTap: () {},
+                title: Text(box.get(keylist[index])),
               ),
             ),
           ),
@@ -48,26 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               hintText: "enter a task"),
                         ),
                       ),
-                      TextField(
-                        controller: descontroller,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: "enter detaiils of the task"),
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: "enter date"),
-                      ),
                       ElevatedButton(
                           onPressed: () {
-                            box.add(titlecontroller.text);
+                            box.add({
+                              "title": titlecontroller.text,
+                              "isCompleted": false
+                            });
                             keylist = box.keys.toList();
                             setState(() {});
+                            titlecontroller.clear();
                           },
-                          child: Text("save"))
+                          child: Text("save")),
                     ],
                   ));
         },
