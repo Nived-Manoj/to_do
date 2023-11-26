@@ -32,9 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: keylist.length,
               itemBuilder: (context, index) => ListTile(
                 trailing: Checkbox(
-                    value: isChecked,
+                    value: keylist[index],
                     onChanged: (value) {
-                      isChecked = value;
+                      isChecked = true;
                       setState(() {});
                     }),
                 onTap: () {},
