@@ -30,7 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView.builder(
               itemCount: keylist.length,
               itemBuilder: (context, index) => ListTile(
-                title: Text(box.get(keylist[index])["title"]),
+                title: Text(
+                  box.get(keylist[index])["title"],
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
                 trailing: Checkbox(
                     value: box.get(keylist[index])["isCompleted"],
                     onChanged: (bool? value) {
@@ -51,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
           showModalBottomSheet(
               context: context,
               builder: (context) => Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -60,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              hintText: "enter a task"),
+                              hintText: "Enter a task"),
                         ),
                       ),
                       ElevatedButton(
