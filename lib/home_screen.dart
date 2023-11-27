@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               "isCompleted": false
                             });
                             keylist = box.keys.toList();
+                            Navigator.pop(context);
                             setState(() {});
                             titlecontroller.clear();
                           },
