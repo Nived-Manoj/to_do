@@ -11,7 +11,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var box = Hive.box('myBox');
   final titlecontroller = TextEditingController();
-  bool? isChecked = false;
 
   var keylist = [];
   @override
@@ -31,14 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView.builder(
               itemCount: keylist.length,
               itemBuilder: (context, index) => ListTile(
+                title: Text(box.get(keylist[index])["title"]),
                 trailing: Checkbox(
-                    value: keylist[index],
-                    onChanged: (value) {
-                      isChecked = true;
+                    value: box.get(keylist[index])["isCompleted"],
+                    onChanged: (bool? value) {
+                      box.put(keylist[index], {
+                        "title": box.get(keylist[index])["title"],
+                        "isCompleted": value
+                      });
                       setState(() {});
                     }),
                 onTap: () {},
-                title: Text(box.get(keylist[index])),
               ),
             ),
           ),
