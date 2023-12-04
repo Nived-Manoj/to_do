@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   box.get(keylist[index])["title"],
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
-                trailing: Checkbox(
+                leading: Checkbox(
                     value: box.get(keylist[index])["isCompleted"],
                     onChanged: (bool? value) {
                       box.put(keylist[index], {
