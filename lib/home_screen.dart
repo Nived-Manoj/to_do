@@ -34,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   box.get(keylist[index])["title"],
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
+                trailing: IconButton(
+                    onPressed: () {}, icon: Icon(Icons.delete_outline)),
                 leading: Checkbox(
                     value: box.get(keylist[index])["isCompleted"],
                     onChanged: (bool? value) {
