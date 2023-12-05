@@ -29,29 +29,55 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: ListView.builder(
               itemCount: keylist.length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(
-                  box.get(keylist[index])["title"],
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              itemBuilder: (context, index) => Padding(
+                padding: EdgeInsets.only(
+                  left: 25,
+                  right: 25,
+                  top: 25,
                 ),
-                trailing: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.delete_outline)),
-                leading: Checkbox(
-                    value: box.get(keylist[index])["isCompleted"],
-                    onChanged: (bool? value) {
-                      box.put(keylist[index], {
-                        "title": box.get(keylist[index])["title"],
-                        "isCompleted": value
-                      });
-                      setState(() {});
-                    }),
-                onTap: () {},
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.cyan,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Checkbox(
+                            activeColor: Colors.black,
+                            value: box.get(keylist[index])["isCompleted"],
+                            onChanged: (bool? value) {
+                              box.put(keylist[index], {
+                                "title": box.get(keylist[index])["title"],
+                                "isCompleted": value
+                              });
+                              setState(() {});
+                            }),
+                        Text(
+                          box.get(keylist[index])["title"],
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              box.delete(keylist[index]);
+                            },
+                            icon: Icon(Icons.delete_outline)),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.tealAccent,
+        foregroundColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: () {
           showModalBottomSheet(
               context: context,
