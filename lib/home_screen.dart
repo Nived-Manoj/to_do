@@ -94,6 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Colors.purpleAccent)),
                           onPressed: () {
                             box.add({
                               "title": titlecontroller.text,
@@ -104,7 +107,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {});
                             titlecontroller.clear();
                           },
-                          child: Text("save")),
+                          child: Text(
+                            "save",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          )),
                     ],
                   ));
         },
