@@ -60,11 +60,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w500),
                         ),
-                        IconButton(
-                            onPressed: () {
-                              box.delete(keylist[index]);
-                            },
-                            icon: Icon(Icons.delete_outline)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  box.delete(keylist[index]);
+                                },
+                                icon: Icon(Icons.delete_outline)),
+                          ],
+                        ),
                       ],
                     ),
                   ),
