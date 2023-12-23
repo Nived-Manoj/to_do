@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -24,56 +25,58 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: keylist.length,
-              itemBuilder: (context, index) => Padding(
-                padding: EdgeInsets.only(
-                  left: 25,
-                  right: 25,
-                  top: 25,
+      body: Column(children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: keylist.length,
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(
+                left: 25,
+                right: 25,
+                top: 25,
+              ),
+              child: ListTile(
+                leading: Checkbox(
+                    activeColor: Colors.black,
+                    value: box.get(keylist[index])["isCompleted"],
+                    onChanged: (bool? value) {
+                      box.put(keylist[index], {
+                        "title": box.get(keylist[index])["title"],
+                        "isCompleted": value
+                      });
+                      setState(() {});
+                    }),
+                title: Text(
+                  box.get(keylist[index])["title"],
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.cyan,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Checkbox(
-                            activeColor: Colors.black,
-                            value: box.get(keylist[index])["isCompleted"],
-                            onChanged: (bool? value) {
-                              box.put(keylist[index], {
-                                "title": box.get(keylist[index])["title"],
-                                "isCompleted": value
-                              });
-                              setState(() {});
-                            }),
-                        Text(
-                          box.get(keylist[index])["title"],
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              box.delete(keylist[index]);
-                            },
-                            icon: Icon(Icons.delete_outline)),
-                      ],
-                    ),
-                  ),
-                ),
+                onLongPress: () {
+                  CoolAlert.show(
+                    onCancelBtnTap: () {
+                      Navigator.pop;
+                    },
+                    onConfirmBtnTap: () {
+                      box.delete(keylist[index]);
+                    },
+                    context: context,
+                    type: CoolAlertType.confirm,
+                    text: 'Do you want to Delete task?',
+                    confirmBtnText: 'confirm',
+                    cancelBtnText: 'cancel',
+                    confirmBtnColor: Colors.green,
+                  );
+                },
+                // trailing: IconButton(
+                //     onPressed: () {
+                //       box.delete(keylist[index]);
+                //     },
+                //     icon: Icon(Icons.delete_outline)),
+                tileColor: Colors.cyanAccent,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ]),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.tealAccent,
         foregroundColor: Colors.black,
